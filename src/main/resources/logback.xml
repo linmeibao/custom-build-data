@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds">
+	<!-- 日志存储地址 -->
+	<property name="LOG_HOME" value="logs" />
+	<property name="SRVNAME" value="model-auto-test-log" />
+	<!-- 日志备份地址 -->
+	<property name="LOG_BACK_HOME" value="logs/backup" />
+
+	<!--日志每日文件备份，保存近30天-->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--日志文件保存地址-->
+		<file>${LOG_HOME}/${SRVNAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--文件名保存格式-->
+			<fileNamePattern>${LOG_BACK_HOME}/${SRVNAME}.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!--只保存30天-->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<!--日志滚动格式-->
+		<encoder>
+			<pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-5level %logger{100} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!--控制台输出日志设置-->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<withJansi>true</withJansi>
+		<!--日志输出格式-->
+		<encoder>
+			<pattern>%gray(%d{yyyy-MM-dd HH:mm:ss.SSS}) - %boldRed(%5p) %blue([%5.20t]) %magenta(%-20.50logger{50}) %yellow(%2M) %green(%2L) : %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!--输出日志级别设置-->
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+	<!--设置制定包的输出日志级别-->
+	<!--生产环境切换info-->
+<!--	<logger name="jrx" level="info"/>-->
+	<logger name="jrx" level="debug"/>
+</configuration>
