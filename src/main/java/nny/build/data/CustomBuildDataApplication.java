@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomBuildDataApplication {
 
     public static void main(String[] args) {
-        log.info("自动化测试启动, args:{}", args);
+        log.info("自定义生成测试数据服务启动, args:{}", args);
         ApplicationRunner runner = new ApplicationRunner();
         runner.initialize(args);
         runner.start();
