@@ -3,69 +3,44 @@
 
 ## TODO
 
-- DML和DDL的序列化功能
-- 项目打包，还有项目的-help和-config功能
+- DML和DDL的序列化功能 ✅
+- 项目打包，还有项目的-help和-config功能  ✅
+- 保险公司示例    ✅
+- 各个字段配置补充
 
 ### 主要功能
 
-对mysql数据库批量构建模拟业务系统的测试数据，可用于系统压力测试、POC演示、BI报表展示、数据分析指标加工逻辑测试。
+对mysql数据库批量构建模拟业务系统流程的测试数据，可用于系统压力测试、POC演示、BI报表展示、数据分析指标加工逻辑测试。
 可自定义库表结构，自定义关联关系，支持复杂的数据结构生成。通过符合特定规则的JSON配置文件，转换成对数据库表的DDL操作和DML操作。
+
+### 目录结构
+
+```
+.
+├── README.md                       说明文档
+├── logs                            日志目录
+├── pom.xml                 
+└── src                     
+    ├── main
+    │   ├── java
+    │   │   └── jrx
+    │   │       └── data
+    │   └── resources               资源目录
+    │       ├── dataconf            数据配置目录
+    │       │   ├── data_readme.md
+    │       │   ├── ddl.sql
+    │       │   ├── increment.id
+    │       │   └── realtime_test_data_definition.json  数据配置JSON文件
+    │       ├── logback.xml         日志配置文件
+    │       └── model-auto-test.yml 工程配置文件
+    └── test                        测试目录
+```
 
 ###  快速开始
 
 ### 配置文件示例
 
 ```
-# 多线程配置
-threadConfig:
-  # 构建数据的线程数
-  threadBuilderNumber: 5
-  # 每次批量大小
-  batchSize: 50
-  # 是否开启单线程调试
-  singleThreadDebug: false
-
-# 数据库配置
-dataSourceConfig:
-  #数据源列表
-  dataSourceInfos:
-    # 数据源A
-    - dbKey: ops
-      driverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://127.0.0.1:3306/xxops?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
-      username: root
-      password: root
-    # 数据源B
-    - dbKey: txn
-      driverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://127.0.0.1:3306/xxtxn?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
-      username: root
-      password: root
-  # 是否开启自动删表建表DDL，开启此配置之后，每次构建数据之前都会把“dataDDLJsonFilePath”中的JSON配置解析成DDL语句进行删表之后再重建表
-  autoDDl: false
-  
-  serializeDDL:
-       generateDDL:false
-      generateDML:false
-       driverClassName: com.mysql.jdbc.Driver
-       jdbcUrl: jdbc:mysql://127.0.0.1:3306/xxops?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
-       username: root
-       password: root
-
-# 设置构建多少组数据
-buildNumber: 200
-
-# DML配置文件路径
-dataJsonFilePath: /Users/hsy/jrx/anyest3/model-auto-test/target/classes/dataconf/realtime_test_data_definition_test.json
-
-# DDL配置文件路径(先删表,再建表)
-dataDDLJsonFilePath: /Users/hsy/jrx/anyest3/model-auto-test/target/classes/test_ddl.json
-
-# sql文件输出路径
-sqlFileOutputPath: /Users/hsy/jrx/anyest3/model-auto-test/target/classes/
-
-# 全局自增Id保存文件地址
-globalAutoIncrementFilePath: /Users/hsy/jrx/anyest3/model-auto-test/target/classes/dataconf/increment.id
 ```
 
 - 修改mysql数据库为自己的测试库

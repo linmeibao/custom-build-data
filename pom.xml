@@ -121,28 +121,24 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+        </dependency>
     </dependencies>
 
     <build>
+
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>nny.build.data.builder.ModelAutoTestApplication</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <!--
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptors>
                         <descriptor>src/assembly/package.xml</descriptor>
                     </descriptors>
                     <finalName>${project.artifactId}-${project.version}</finalName>
-                    -->
                 </configuration>
                 <executions>
                     <execution>
@@ -154,7 +150,68 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
         </plugins>
+        <!--        <plugins>-->
+        <!--            <plugin>-->
+        <!--                <artifactId>maven-assembly-plugin</artifactId>-->
+        <!--                <configuration>-->
+        <!--                    <archive>-->
+        <!--                        <manifest>-->
+        <!--                            <mainClass>nny.build.data.builder.runner.ApplicationRunner.CustomBuildDataApplication</mainClass>-->
+        <!--                        </manifest>-->
+        <!--                    </archive>-->
+        <!--                    <descriptorRefs>-->
+        <!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+        <!--                    </descriptorRefs>-->
+        <!--                    &lt;!&ndash;-->
+        <!--                    <appendAssemblyId>false</appendAssemblyId>-->
+        <!--                    <descriptors>-->
+        <!--                        <descriptor>src/assembly/package.xml</descriptor>-->
+        <!--                    </descriptors>-->
+        <!--                    <finalName>${project.artifactId}-${project.version}</finalName>-->
+        <!--                    &ndash;&gt;-->
+        <!--                </configuration>-->
+        <!--                <executions>-->
+        <!--                    <execution>-->
+        <!--                        <id>make-assembly</id>-->
+        <!--                        <phase>package</phase>-->
+        <!--                        <goals>-->
+        <!--                            <goal>single</goal>-->
+        <!--                        </goals>-->
+        <!--                    </execution>-->
+        <!--                </executions>-->
+        <!--            </plugin>-->
+
+
+        <!--            <plugin>-->
+        <!--                <groupId>org.apache.maven.plugins</groupId>-->
+        <!--                <artifactId>maven-assembly-plugin</artifactId>-->
+        <!--                <version>3.1.0</version>-->
+        <!--                <configuration>-->
+        <!--                    <appendAssemblyId>false</appendAssemblyId>-->
+        <!--                    <tarLongFileMode>posix</tarLongFileMode>-->
+        <!--                    <descriptors>-->
+        <!--                        <descriptor>src/main/assembly/assembly.xml</descriptor>-->
+        <!--                    </descriptors>-->
+        <!--                </configuration>-->
+        <!--                <executions>-->
+        <!--                    <execution>-->
+        <!--                        <phase>package</phase>-->
+        <!--                        <goals>-->
+        <!--                            <goal>single</goal>-->
+        <!--                        </goals>-->
+        <!--                    </execution>-->
+        <!--                </executions>-->
+        <!--            </plugin>-->
+        <!--        </plugins>-->
     </build>
 
 </project>

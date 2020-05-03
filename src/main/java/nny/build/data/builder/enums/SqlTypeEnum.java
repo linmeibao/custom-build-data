@@ -10,7 +10,7 @@ package nny.build.data.builder.enums;
 public enum SqlTypeEnum {
 
     STRING("STRING", "VARCHAR"),
-    INTEGER("INTEGER", "INTEGER"),
+    INTEGER("INTEGER", "INT"),
     Boolean("Boolean", "BOOLEAN"),
     LONG("LONG", "INTEGER"),
     DATE("DATE", "DATETIME"),

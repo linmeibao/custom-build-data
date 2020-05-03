@@ -3,61 +3,49 @@ threadConfig:
   # 线程数
   threadBuilderNumber: 5
   # 每次批量大小
-  batchSize: 1
+  batchSize: 10
   # 单线程调试
-  singleThreadDebug: true
+  singleThreadDebug: false
 
 # 数据库配置
 dataSourceConfig:
   dataSourceInfos:
     # 数据源A
-    - dbKey: ops
+    - dbKey: test
       driverClassName: com.mysql.jdbc.Driver
       jdbcUrl: jdbc:mysql://127.0.0.1:3308/ops?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
       username: root
       password: root
-    # 数据源B
-    - dbKey: txn
-      driverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://127.0.0.1:3309/txn?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
-      username: root
-      password: root
-    # 数据源C
-    - dbKey: vapp
-      driverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://127.0.0.1:3307/vapp?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
-      username: root
-      password: 123456
   # 是否开启自动删表建表DDL
-  autoDDl: false
+  autoDDl: true
 
 # 序列化生成示例文件配置,从mysql数据库读取库表结构和数据序列化生成示例JSON
 exampleConfig:
   # 示例文件输出文件路径
-  generateExampleFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/
+  generateExampleFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/
   # 是否生成DDl示例文件
   generateDDl: false
   # 是否生成DMl示例文件
   generateDMl: false
   # 数据源列表
   dataSourceInfos:
-    - dbKey: ops
+    - dbKey: test
       driverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://127.0.0.1:3306/xxops?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
+      jdbcUrl: jdbc:mysql://127.0.0.1:3308/ops?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
       username: root
       password: root
 
 # 设置构建多少组数据
-buildNumber: 10
+buildNumber: 1
 
 # DML配置文件路径
-dataJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/example.json
-
-# DDL配置文件路径
-dataDDLJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/example_ddl.json
+dataJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/insurance_business.json
+#
+## DDL配置文件路径
+dataDDLJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/insurance_business_ddl.json
 
 # 自动生成的sql语句输出路径
-sqlFileOutputFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/sqlNoteFile/
+sqlFileOutputFilePath: /Users/hsy/nny/custom-build-data/target/classes/
 
 # 全局自增Id保存文件地址
 globalAutoIncrementFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/increment.id

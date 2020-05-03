@@ -125,8 +125,10 @@ public class BuildData {
             BuildSqlData buildSqlData = conversionDml(relation);
             setSqlData(relation.getRelationTable().getDbKey(), buildSqlData);
 
+            if (CollectionUtils.isNotEmpty(relation.getRelationTable().getRelations())) {
+                conversionTableRelation(relation.getRelationTable().getRelations());
+            }
         }
-
     }
 
     private BuildSqlData conversionDml(TableInfo tableInfo) {

@@ -1,5 +1,6 @@
 package nny.build.data.builder.config;
 
+import com.alibaba.fastjson.JSONObject;
 import nny.build.data.builder.exception.DataSourceException;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,6 +50,6 @@ public class DataSourceConfig {
             connectionMap.put(source.getDbKey(), source.initializeConnection());
         }
 
-        log.info("填充数据库连接完成 , {}", dataSourceInfos);
+        log.info("填充数据库连接完成 , {}", JSONObject.toJSONString(dataSourceInfos));
     }
 }

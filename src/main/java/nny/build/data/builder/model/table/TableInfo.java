@@ -128,10 +128,19 @@ public class TableInfo implements IBuildCompute, Serializable {
         }
 
         if (relations != null) {
+
+            TableInStateDefinition tempDef = inState.getTableInStateDefinition();
+            Integer incrementValue = inState.getIncrementValue();
+            Integer tableDataRowNum = inState.getTableDataRowNum();
+
             for (TableRelation relation : relations) {
                 relation.initialize(inState);
                 relation.build(inState);
             }
+
+            inState.setTableInStateDefinition(tempDef);
+            inState.setIncrementValue(incrementValue);
+            inState.setTableDataRowNum(tableDataRowNum);
         }
 
     }

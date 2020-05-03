@@ -3,7 +3,7 @@
 <configuration scan="true" scanPeriod="60 seconds">
 	<!-- 日志存储地址 -->
 	<property name="LOG_HOME" value="logs" />
-	<property name="SRVNAME" value="model-auto-test-log" />
+	<property name="SRVNAME" value="custom-build-data-log" />
 	<!-- 日志备份地址 -->
 	<property name="LOG_BACK_HOME" value="logs/backup" />
 
@@ -19,7 +19,8 @@
 		</rollingPolicy>
 		<!--日志滚动格式-->
 		<encoder>
-			<pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-5level %logger{100} - %msg%n</pattern>
+			<pattern>%gray(%d{yyyy-MM-dd HH:mm:ss.SSS}) - %boldRed(%5p) %blue([%5.20t]) %magenta(%-20.50logger{50}) %yellow(%2M) %green(%2L) : %msg%n</pattern>
+
 		</encoder>
 	</appender>
 
@@ -33,13 +34,12 @@
 	</appender>
 
 	<!--输出日志级别设置-->
-	<root level="info">
+	<root level="debug">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>
 
 	<!--设置制定包的输出日志级别-->
 	<!--生产环境切换info-->
-<!--	<logger name="jrx" level="info"/>-->
-	<logger name="jrx" level="debug"/>
+	<logger name="nny" level="debug"/>
 </configuration>

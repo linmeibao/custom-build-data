@@ -106,13 +106,15 @@ public class TableRelation implements IBuildCompute, Serializable {
             relationTable.build(inState);
 
             List<TableColumn> tempList = CommonUtils.deepCopy(relationTable.getColumns());
-            relationColumns.add(tempList);
 
             if (CollectionUtils.isNotEmpty(relationTable.getWheres())) {
-                for (TableColumn where : relationTable.getWheres()) {
-                    relationColumns.get(i).add(where);
-                }
+//                for (TableColumn where : relationTable.getWheres()) {
+//                    relationColumns.get(i).add(where);
+//                }
+                tempList.addAll(CommonUtils.deepCopy(relationTable.getWheres()));
             }
+            relationColumns.add(tempList);
+
 
             if (relationTableRowNum > 1) {
                 relationTable.setColumns(CommonUtils.deepCopy(baseTableColumns));

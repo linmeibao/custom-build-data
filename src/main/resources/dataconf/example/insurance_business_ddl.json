@@ -1,0 +1,158 @@
+[
+  {
+    "columns": [
+      {
+        "columnName": "cust_id",
+        "columnType": "int(11)",
+        "comment": "客户id",
+        "dataType": "INTEGER",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "name",
+        "columnType": "varchar(15)",
+        "comment": "客户姓名",
+        "dataType": "STRING",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "staff_id",
+        "columnType": "int(11)",
+        "comment": "关联业务员id",
+        "dataType": "INTEGER",
+        "isNullStr": "NULL"
+      },
+      {
+        "columnName": "policy_number",
+        "columnType": "int(11)",
+        "comment": "保单数量",
+        "dataType": "INTEGER",
+        "isNullStr": "NULL"
+      }
+    ],
+    "dbKey": "test",
+    "indexInfos": [
+      {
+        "columnName": "staff_id",
+        "indexName": "staff_id"
+      }
+    ],
+    "no": 1,
+    "primary": [
+      "cust_id"
+    ],
+    "tableName": "insurance_customer_info"
+  },
+  {
+    "columns": [
+      {
+        "columnName": "p_id",
+        "columnType": "int(11)",
+        "comment": "保单id",
+        "dataType": "INTEGER",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "project_name",
+        "columnType": "varchar(15)",
+        "comment": "保单项目名称",
+        "dataType": "STRING",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "p_no",
+        "columnType": "int(11)",
+        "comment": "保单序号",
+        "dataType": "INTEGER",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "p_type",
+        "columnType": "varchar(11)",
+        "comment": "保单类型",
+        "dataType": "STRING",
+        "isNullStr": "NULL"
+      },
+      {
+        "columnName": "insured_amount",
+        "columnType": "decimal(8,2)",
+        "comment": "保险金额",
+        "dataType": "DOUBLE",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "available_amount",
+        "columnType": "decimal(8,2)",
+        "comment": "可用保险赔偿金额",
+        "dataType": "DOUBLE",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "cust_id",
+        "columnType": "int(11)",
+        "comment": "关联客户id",
+        "dataType": "INTEGER",
+        "isNullStr": "NOT NULL"
+      }
+    ],
+    "dbKey": "test",
+    "indexInfos": [
+      {
+        "columnName": "cust_id",
+        "indexName": "cust_id"
+      }
+    ],
+    "no": 2,
+    "primary": [
+      "p_id",
+      "project_name"
+    ],
+    "tableName": "insurance_policy"
+  },
+  {
+    "columns": [
+      {
+        "columnName": "c_id",
+        "columnType": "int(11)",
+        "comment": "理赔记录id",
+        "dataType": "INTEGER",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "p_id",
+        "columnType": "int(11)",
+        "comment": "关联保单id",
+        "dataType": "INTEGER",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "claims_approve_result",
+        "columnType": "varchar(10)",
+        "comment": "理赔结果",
+        "dataType": "STRING",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "claims_approve_amount",
+        "columnType": "decimal(8,2)",
+        "comment": "理赔批准金额",
+        "dataType": "DOUBLE",
+        "isNullStr": "NOT NULL"
+      },
+      {
+        "columnName": "claims_reject_reason",
+        "columnType": "varchar(200)",
+        "comment": "理赔拒绝原因",
+        "dataType": "STRING",
+        "isNullStr": "NULL"
+      }
+    ],
+    "dbKey": "test",
+    "indexInfos": [],
+    "no": 3,
+    "primary": [
+      "c_id"
+    ],
+    "tableName": "insurance_claims"
+  }
+]

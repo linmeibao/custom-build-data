@@ -1,0 +1,250 @@
+{
+  "scenarios": [
+    {
+      "desc": "场景1：INSERT一条保险客户记录，INSERT N条保险单记录，（保险客户的保单数量是多少就插入几条，保单数量固定为3），INSERT 1条保险理赔记录，如果理赔批准为通过（approve），UPDATE保险单记录表的'可用保险赔偿金额'的值",
+      "tableInfos": [
+        {
+          "desc": "INSERT保险客户记录",
+          "columns": [
+            {
+              "columnName": "cust_id",
+              "comment": "客户id",
+              "dataType": "INTEGER",
+              "valueRule": {
+                "defaultValue": 0,
+                "type": "GLOBAL_AUTO_INCREMENT"
+              }
+            },
+            {
+              "columnName": "name",
+              "comment": "客户姓名",
+              "dataType": "STRING",
+              "valueRule": {
+                "defaultValue": "test",
+                "type": "RANDOM_NAME"
+              }
+            },
+            {
+              "columnName": "staff_id",
+              "comment": "关联业务员id",
+              "dataType": "INTEGER",
+              "valueRule": {
+                "type": "SELECTOR",
+                "valueArray": [
+                  11,
+                  22,
+                  33
+                ]
+              }
+            },
+            {
+              "columnName": "policy_number",
+              "comment": "保单数量",
+              "dataType": "INTEGER",
+              "valueRule": {
+                "type": "NORMAL",
+                "defaultValue": 3
+              }
+            }
+          ],
+          "relations": [
+            {
+              "desc": "INSERT保险单记录",
+              "relationType": "ONE_TO_MANY",
+              "relationRowNumExpression": "${1.insurance_customer_info.policy_number}",
+              "relationTable": {
+                "tableInStateDefinition": {
+                  "tableFixedValues": {
+                    "p_type": [
+                      "P001",
+                      "P002",
+                      "P002"
+                    ]
+                  }
+                },
+                "columns": [
+                  {
+                    "columnName": "p_id",
+                    "comment": "保单id",
+                    "dataType": "INTEGER",
+                    "valueRule": {
+                      "type": "GLOBAL_AUTO_INCREMENT"
+                    }
+                  },
+                  {
+                    "columnName": "project_name",
+                    "comment": "保单项目名称",
+                    "dataType": "STRING",
+                    "valueRule": {
+                      "type": "SELECTOR",
+                      "valueArray": [
+                        "百万护驾",
+                        "出行无忧",
+                        "乐享人生"
+                      ]
+                    }
+                  },
+                  {
+                    "columnName": "p_no",
+                    "comment": "保单序号",
+                    "dataType": "STRING",
+                    "valueRule": {
+                      "type": "CONTINUOUS_VALUE"
+                    }
+                  },
+                  {
+                    "columnName": "p_type",
+                    "comment": "保单类型",
+                    "dataType": "STRING",
+                    "valueRule": {
+                      "type": "FIXED_VALUE"
+                    }
+                  },
+                  {
+                    "columnName": "insured_amount",
+                    "comment": "保险金额",
+                    "dataType": "DOUBLE",
+                    "valueRule": {
+                      "type": "RANDOM_MONEY"
+                    }
+                  },
+                  {
+                    "columnName": "available_amount",
+                    "comment": "可用保险赔偿金额",
+                    "dataType": "DOUBLE",
+                    "valueRule": {
+                      "type": "REFERENCE",
+                      "refColumnExpression": "${2.insurance_policy.insured_amount}"
+                    }
+                  },
+                  {
+                    "columnName": "cust_id",
+                    "comment": "关联客户id",
+                    "dataType": "INTEGER",
+                    "valueRule": {
+                      "type": "REFERENCE",
+                      "refColumnExpression": "${1.insurance_customer_info.cust_id}"
+                    }
+                  }
+                ],
+                "relations": [
+                  {
+                    "desc": "INSERT保险理赔记录",
+                    "relationType": "ONE_TO_MANY",
+                    "relationTableRowNum": 1,
+                    "relationTable": {
+                      "columns": [
+                        {
+                          "columnName": "c_id",
+                          "comment": "理赔记录id",
+                          "dataType": "INTEGER",
+                          "valueRule": {
+                            "type": "GLOBAL_AUTO_INCREMENT"
+                          }
+                        },
+                        {
+                          "columnName": "p_id",
+                          "comment": "关联保单id",
+                          "dataType": "INTEGER",
+                          "valueRule": {
+                            "type": "REFERENCE",
+                            "refColumnExpression": "${2.insurance_policy.p_id}"
+                          }
+                        },
+                        {
+                          "columnName": "claims_approve_result",
+                          "comment": "理赔结果",
+                          "dataType": "STRING",
+                          "valueRule": {
+                            "type": "SELECTOR",
+                            "valueArray": [
+                              "approve",
+                              "reject"
+                            ]
+                          }
+                        },
+                        {
+                          "columnName": "claims_approve_amount",
+                          "comment": "理赔批准金额",
+                          "dataType": "DOUBLE",
+                          "valueRule": {
+                            "type": "RANDOM_MONEY",
+                            "defaultValue": 0,
+                            "boolExpression": "${3.insurance_claims.claims_approve_result} == \"approve\"",
+                            "compareExpression": "${2.insurance_policy.available_amount} > ${3.insurance_claims.claims_approve_amount}"
+                          }
+                        },
+                        {
+                          "columnName": "claims_reject_reason",
+                          "comment": "理赔拒绝原因",
+                          "dataType": "STRING",
+                          "valueRule": {
+                            "type": "SELECTOR",
+                            "valueArray": [
+                              "单据不完整",
+                              "未达到理赔标准"
+                            ],
+                            "defaultValue": null,
+                            "boolExpression": "${3.insurance_claims.claims_approve_result} == \"reject\""
+                          }
+                        }
+                      ],
+                      "relations": [
+                        {
+                          "desc": "当保险理赔成功时，需要UPDATE保险单记录表的'可用保险赔偿金额'字段值",
+                          "relationType": "ONE_TO_NNE",
+                          "relationTableRowNum": 1,
+                          "relationTable": {
+                            "conditionExpression": "${3.insurance_claims.claims_approve_result} == \"approve\"",
+                            "columns": [
+                              {
+                                "columnName": "available_amount",
+                                "comment": "可用保险赔偿金额",
+                                "dataType": "DOUBLE",
+                                "valueRule": {
+                                  "type": "EXPRESSION",
+                                  "expression": "${2.insurance_policy.available_amount} - ${3.insurance_claims.claims_approve_amount}"
+                                }
+                              }
+                            ],
+                            "wheres": [
+                              {
+                                "columnName": "p_id",
+                                "comment": "保单id",
+                                "dataType": "INTEGER",
+                                "valueRule": {
+                                  "type": "REFERENCE",
+                                  "refColumnExpression": "${2.insurance_policy.p_id}"
+                                }
+                              }
+                            ],
+                            "dbKey": "test",
+                            "no": 4,
+                            "operateMode": "UPDATE",
+                            "tableName": "insurance_policy"
+                          }
+                        }
+                      ],
+                      "dbKey": "test",
+                      "no": 3,
+                      "operateMode": "INSERT",
+                      "tableName": "insurance_claims"
+                    }
+                  }
+                ],
+                "dbKey": "test",
+                "no": 2,
+                "operateMode": "INSERT",
+                "tableName": "insurance_policy"
+              }
+            }
+          ],
+          "dbKey": "test",
+          "no": 1,
+          "operateMode": "INSERT",
+          "tableName": "insurance_customer_info"
+        }
+      ]
+    }
+  ]
+}
