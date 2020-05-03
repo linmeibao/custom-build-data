@@ -8,7 +8,7 @@
     <artifactId>custom-build-data</artifactId>
     <version>1.0.0</version>
     <name>custom-build-data</name>
-    <description>模型测试项目</description>
+    <description>自定义构建测试数据工具</description>
 
 
     <properties>
@@ -67,7 +67,6 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -78,7 +77,6 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -121,11 +119,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.17</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -159,59 +152,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <!--        <plugins>-->
-        <!--            <plugin>-->
-        <!--                <artifactId>maven-assembly-plugin</artifactId>-->
-        <!--                <configuration>-->
-        <!--                    <archive>-->
-        <!--                        <manifest>-->
-        <!--                            <mainClass>nny.build.data.builder.runner.ApplicationRunner.CustomBuildDataApplication</mainClass>-->
-        <!--                        </manifest>-->
-        <!--                    </archive>-->
-        <!--                    <descriptorRefs>-->
-        <!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
-        <!--                    </descriptorRefs>-->
-        <!--                    &lt;!&ndash;-->
-        <!--                    <appendAssemblyId>false</appendAssemblyId>-->
-        <!--                    <descriptors>-->
-        <!--                        <descriptor>src/assembly/package.xml</descriptor>-->
-        <!--                    </descriptors>-->
-        <!--                    <finalName>${project.artifactId}-${project.version}</finalName>-->
-        <!--                    &ndash;&gt;-->
-        <!--                </configuration>-->
-        <!--                <executions>-->
-        <!--                    <execution>-->
-        <!--                        <id>make-assembly</id>-->
-        <!--                        <phase>package</phase>-->
-        <!--                        <goals>-->
-        <!--                            <goal>single</goal>-->
-        <!--                        </goals>-->
-        <!--                    </execution>-->
-        <!--                </executions>-->
-        <!--            </plugin>-->
-
-
-        <!--            <plugin>-->
-        <!--                <groupId>org.apache.maven.plugins</groupId>-->
-        <!--                <artifactId>maven-assembly-plugin</artifactId>-->
-        <!--                <version>3.1.0</version>-->
-        <!--                <configuration>-->
-        <!--                    <appendAssemblyId>false</appendAssemblyId>-->
-        <!--                    <tarLongFileMode>posix</tarLongFileMode>-->
-        <!--                    <descriptors>-->
-        <!--                        <descriptor>src/main/assembly/assembly.xml</descriptor>-->
-        <!--                    </descriptors>-->
-        <!--                </configuration>-->
-        <!--                <executions>-->
-        <!--                    <execution>-->
-        <!--                        <phase>package</phase>-->
-        <!--                        <goals>-->
-        <!--                            <goal>single</goal>-->
-        <!--                        </goals>-->
-        <!--                    </execution>-->
-        <!--                </executions>-->
-        <!--            </plugin>-->
-        <!--        </plugins>-->
     </build>
 
 </project>

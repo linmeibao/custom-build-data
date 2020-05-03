@@ -39,10 +39,10 @@ exampleConfig:
 buildNumber: 1
 
 # DML配置文件路径
-dataJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/insurance_business.json
+dataJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/insurance.json
 #
 ## DDL配置文件路径
-dataDDLJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/insurance_business_ddl.json
+dataDDLJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/insurance_ddl.json
 
 # 自动生成的sql语句输出路径
 sqlFileOutputFilePath: /Users/hsy/nny/custom-build-data/target/classes/

@@ -14,8 +14,9 @@
 │   ├── custom-build-data.yml
 │   ├── dataconf
 │   │   ├── example
-│   │   │   ├── insurance_business.json
-│   │   │   └── insurance_business_ddl.json
+│   │   │   ├── insurance.json
+│   │   │   ├── insurance_ddl.json
+│   │   │   └── insurance_ddl.sql
 │   │   └── increment.id
 │   └── logback.xml
 ├── lib
@@ -81,10 +82,10 @@ exampleConfig:
 buildNumber: 1
 
 # DML配置文件路径
-dataJsonFilePath: /Users/hsy/nny/custom-build-data/target/custom-build-data-1.0.0/config/dataconf/example/insurance_business.json
+dataJsonFilePath: /Users/hsy/nny/custom-build-data/target/custom-build-data-1.0.0/config/dataconf/example/insurance.json
 
 # DDL配置文件路径
-dataDDLJsonFilePath: /Users/hsy/nny/custom-build-data/target/custom-build-data-1.0.0/config/dataconf/example/insurance_business_ddl.json
+dataDDLJsonFilePath: /Users/hsy/nny/custom-build-data/target/custom-build-data-1.0.0/config/dataconf/example/insurance_ddl.json
 
 # 自动生成的sql语句输出路径
 sqlFileOutputFilePath: /Users/hsy/nny/custom-build-data/target/custom-build-data-1.0.0/
@@ -94,8 +95,8 @@ globalAutoIncrementFilePath: /Users/hsy/nny/custom-build-data/target/custom-buil
 ```
 
 - 修改数据源配置中的mysql数据库为自己的测试库
-- 修改DML配置文件路径为:部署目录/custom-build-data-1.0.0/config/dataconf/insurance_business.json（路径为绝对路径）
-- 修改DDL配置文件路径为:部署目录/custom-build-data-1.0.0/config/dataconf/insurance_business.json(路径为绝对路径）
+- 修改DML配置文件路径为:部署目录/custom-build-data-1.0.0/config/dataconf/insurance.json（路径为绝对路径）
+- 修改DDL配置文件路径为:部署目录/custom-build-data-1.0.0/config/dataconf/insurance_ddl.json(路径为绝对路径）
 - 修改sql文件输出路径(路径为绝对路径）
 - 修改全局自增Id保存文件地址(路径为绝对路径）
 - 进入部署目录/custom-build-data-1.0.0目录，执行: sh sbin/start.sh config/custom-build-data.yml
