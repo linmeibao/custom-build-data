@@ -13,7 +13,7 @@ dataSourceConfig:
     # 数据源A
     - dbKey: test
       driverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://127.0.0.1:3308/ops?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
+      jdbcUrl: jdbc:mysql://127.0.0.1:3308/test?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
       username: root
       password: root
   # 是否开启自动删表建表DDL
@@ -31,7 +31,7 @@ exampleConfig:
   dataSourceInfos:
     - dbKey: test
       driverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://127.0.0.1:3308/ops?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
+      jdbcUrl: jdbc:mysql://127.0.0.1:3308/test?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
       username: root
       password: root
 

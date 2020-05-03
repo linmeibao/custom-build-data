@@ -105,12 +105,14 @@ public class TableRelation implements IBuildCompute, Serializable {
 
             relationTable.build(inState);
 
+            BuildExpression tableCondition = relationTable.getTableCondition();
+            if (tableCondition != null && !tableCondition.getExpressionBoolResult()) {
+                continue;
+            }
+
             List<TableColumn> tempList = CommonUtils.deepCopy(relationTable.getColumns());
 
             if (CollectionUtils.isNotEmpty(relationTable.getWheres())) {
-//                for (TableColumn where : relationTable.getWheres()) {
-//                    relationColumns.get(i).add(where);
-//                }
                 tempList.addAll(CommonUtils.deepCopy(relationTable.getWheres()));
             }
             relationColumns.add(tempList);
