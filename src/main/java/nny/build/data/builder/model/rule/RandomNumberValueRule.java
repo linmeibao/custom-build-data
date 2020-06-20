@@ -1,10 +1,10 @@
 package nny.build.data.builder.model.rule;
 
-import nny.build.data.builder.model.InState;
-import nny.build.data.builder.service.IRuleCompute;
-import nny.build.data.builder.utils.RandomDataUtils;
 import lombok.Getter;
 import lombok.Setter;
+import nny.build.data.builder.model.InState;
+import nny.build.data.builder.model.rule.ValueRule;
+import nny.build.data.builder.utils.RandomDataUtils;
 
 import java.io.Serializable;
 
@@ -16,15 +16,12 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class RandomNumberValueRule extends ValueRule implements IRuleCompute, Serializable {
+public class RandomNumberValueRule extends ValueRule implements Serializable {
 
     private static final long serialVersionUID = 4948856655757094800L;
 
     @Override
-    public Object compute(InState inState) {
-        if (this.buildExpressionObject.getExpressionBoolResult()) {
-            return RandomDataUtils.randomNumber();
-        }
-        return super.compute(inState);
+    public Object getRuleValue(InState inState) {
+        return RandomDataUtils.randomNumber();
     }
 }

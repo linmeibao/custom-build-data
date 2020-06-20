@@ -1,17 +1,16 @@
 package nny.build.data.builder.model.rule;
 
-import nny.build.data.builder.exception.ValueComputeException;
-import nny.build.data.builder.model.InState;
-import nny.build.data.builder.model.build.BuildExpression;
-import nny.build.data.builder.model.build.ReferenceDefinition;
-import nny.build.data.builder.model.table.TableColumn;
-import nny.build.data.builder.model.table.TableInfo;
-import nny.build.data.builder.service.IRuleCompute;
+import com.google.common.collect.ImmutableMap;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import nny.build.data.builder.model.InState;
+import nny.build.data.builder.model.build.BuildExpression;
+import nny.build.data.builder.model.build.ReferenceDefinition;
+import nny.build.data.builder.model.rule.ValueRule;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 计算省份
@@ -22,7 +21,7 @@ import java.io.Serializable;
 @Slf4j
 @Getter
 @Setter
-public class ProvinceValueRule extends ValueRule implements IRuleCompute, Serializable {
+public class ProvinceValueRule extends ValueRule implements Serializable {
 
     private static final long serialVersionUID = 7880908696088345061L;
 
@@ -38,12 +37,14 @@ public class ProvinceValueRule extends ValueRule implements IRuleCompute, Serial
 
 
     @Override
-    public Object compute(InState inState) {
-        if (this.buildExpressionObject.getExpressionBoolResult()) {
-            this.refDefinition = BuildExpression.parseRefColumnExpression(inState, this.refColumnExpression);
-            return getProvince(inState);
-        }
-        return super.compute(inState);
+    public Object getRuleValue(InState inState) {
+        this.refDefinition = BuildExpression.parseRefColumnExpression(inState, this.refColumnExpression);
+        return getProvince(inState);
+    }
+
+    @Override
+    protected Map<String, Object> errorMessageMap() {
+        return ImmutableMap.of("refColumnExpression", refColumnExpression);
     }
 
     /**
@@ -53,30 +54,12 @@ public class ProvinceValueRule extends ValueRule implements IRuleCompute, Serial
      * @return
      */
     private Object getProvince(InState inState) {
-
-        TableInfo tableInfo = inState.getTableInfo();
-        TableColumn tableColumn = inState.getTableColumn();
-
-        try {
-            if (this.buildExpressionObject.getExpressionBoolResult()) {
-
-                String idCard = null;
-                if (refDefinition.getCurrentTable()) {
-                    idCard = inState.findTableColumnValue(refDefinition.getRefColumnName()).toString();
-                } else {
-                    idCard = inState.findTableColumnValue(refDefinition.getRefNo(), refDefinition.getRefTableName(), refDefinition.getRefColumnName()).toString();
-                }
-                return idCard.substring(0, 2);
-            }
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                e.printStackTrace();
-            }
-            throw new ValueComputeException(String.format(
-                    "字段生成异常,类型:{%s} tableNo:{%s},tableName:{%s},columnName:{%s} expression:'%s'",
-                    this.type, tableInfo.getNo(), tableInfo.getTableName(), tableColumn.getColumnName(),
-                    this.refColumnExpression));
+        String idCard = null;
+        if (refDefinition.getCurrentTable()) {
+            idCard = inState.findTableColumnValue(refDefinition.getRefColumnName()).toString();
+        } else {
+            idCard = inState.findTableColumnValue(refDefinition.getRefNo(), refDefinition.getRefTableName(), refDefinition.getRefColumnName()).toString();
         }
-        return super.compute(inState);
+        return idCard.substring(0, 2);
     }
 }

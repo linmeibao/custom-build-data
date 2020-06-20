@@ -2,15 +2,13 @@ package nny.build.data.builder.model.rule;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nny.build.data.builder.model.InState;
-import nny.build.data.builder.model.build.BuildExpression;
-import nny.build.data.builder.service.IRuleCompute;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import nny.build.data.builder.model.InState;
 
 import java.io.Serializable;
+import java.util.Map;
 
 
 /**
@@ -63,46 +61,18 @@ import java.io.Serializable;
 @Slf4j
 @Getter
 @Setter
-public class ValueRule implements IRuleCompute, Serializable {
+public class ValueRule extends AbstractValueRule implements Serializable {
 
     private static final long serialVersionUID = -5627643816464706557L;
 
-    /**
-     * 默认值
-     */
-    protected Object defaultValue;
-
-    /**
-     * 表达式
-     */
-    protected BuildExpression buildExpressionObject;
-
-    /**
-     * 规则类型
-     */
-    protected String type;
-
-    /**
-     * 布尔表达式,为true使用计算逻辑，否则使用defaultValue的值（填充buildExpression）
-     */
-    protected String boolExpression;
-
-    /**
-     * 填充布尔表达式
-     */
-    public void fill(InState inState) {
-        if (StringUtils.isNotEmpty(boolExpression)) {
-            buildExpressionObject = BuildExpression.parseExpression(inState, boolExpression);
-            // 表达式计算
-            buildExpressionObject.boolExpressionEvaluation(inState);
-        } else {
-            buildExpressionObject = new BuildExpression(true);
-        }
+    @Override
+    public Object getRuleValue(InState inState) {
+        return defaultValue;
     }
 
     @Override
-    public Object compute(InState inState) {
-        return defaultValue;
+    protected Map<String, Object> errorMessageMap() {
+        return null;
     }
 
 }

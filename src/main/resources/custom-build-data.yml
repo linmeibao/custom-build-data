@@ -22,7 +22,7 @@ dataSourceConfig:
 # 序列化生成示例文件配置,从mysql数据库读取库表结构和数据序列化生成示例JSON
 exampleConfig:
   # 示例文件输出文件路径
-  generateExampleFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/
+  generateExampleFilePath: src/main/resources/dataconf/example/
   # 是否生成DDl示例文件
   generateDDl: false
   # 是否生成DMl示例文件
@@ -39,13 +39,13 @@ exampleConfig:
 buildNumber: 1
 
 # DML配置文件路径
-dataJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/insurance.json
+dataJsonFilePath: src/main/resources/dataconf/example/insurance.json
 #
 ## DDL配置文件路径
-dataDDLJsonFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/example/insurance_ddl.json
+dataDDLJsonFilePath: src/main/resources/dataconf/example/insurance_ddl.json
 
 # 自动生成的sql语句输出路径
-sqlFileOutputFilePath: /Users/hsy/nny/custom-build-data/target/classes/
+sqlFileOutputFilePath: src/main/resources/dataconf/
 
 # 全局自增Id保存文件地址
-globalAutoIncrementFilePath: /Users/hsy/nny/custom-build-data/src/main/resources/dataconf/increment.id
+globalAutoIncrementFilePath: src/main/resources/dataconf/increment.id

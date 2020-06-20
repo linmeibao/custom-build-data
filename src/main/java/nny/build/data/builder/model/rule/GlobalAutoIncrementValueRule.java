@@ -1,13 +1,13 @@
 package nny.build.data.builder.model.rule;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import nny.build.data.builder.config.BuilderConfig;
 import nny.build.data.builder.config.BuilderConfigLoader;
 import nny.build.data.builder.exception.BuilderException;
 import nny.build.data.builder.model.InState;
-import nny.build.data.builder.service.IRuleCompute;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import nny.build.data.builder.model.rule.ValueRule;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @Getter
 @Setter
-public class GlobalAutoIncrementValueRule extends ValueRule implements IRuleCompute, Serializable {
+public class GlobalAutoIncrementValueRule extends ValueRule implements Serializable {
 
     private static final long serialVersionUID = 6204217031539368861L;
     /**
@@ -49,12 +49,8 @@ public class GlobalAutoIncrementValueRule extends ValueRule implements IRuleComp
     }
 
     @Override
-    public Object compute(InState inState) {
-        if (this.buildExpressionObject.getExpressionBoolResult()) {
-            return globalAutoIncrement.getAndIncrement();
-        } else {
-            return super.compute(inState);
-        }
+    public Object getRuleValue(InState inState) {
+        return globalAutoIncrement.getAndIncrement();
     }
 
     public static void writeBackGlobalAutoIncrement() {

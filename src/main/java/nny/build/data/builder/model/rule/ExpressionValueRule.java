@@ -1,16 +1,15 @@
 package nny.build.data.builder.model.rule;
 
-import nny.build.data.builder.exception.ValueComputeException;
-import nny.build.data.builder.model.InState;
-import nny.build.data.builder.model.build.BuildExpression;
-import nny.build.data.builder.model.table.TableColumn;
-import nny.build.data.builder.model.table.TableInfo;
-import nny.build.data.builder.service.IRuleCompute;
+import com.google.common.collect.ImmutableMap;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import nny.build.data.builder.model.InState;
+import nny.build.data.builder.model.build.BuildExpression;
+import nny.build.data.builder.model.rule.ValueRule;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * EXPRESSION
@@ -22,7 +21,7 @@ import java.io.Serializable;
 @Slf4j
 @Getter
 @Setter
-public class ExpressionValueRule extends ValueRule implements IRuleCompute, Serializable {
+public class ExpressionValueRule extends ValueRule implements Serializable {
 
     private static final long serialVersionUID = -1762745790042140599L;
 
@@ -37,26 +36,14 @@ public class ExpressionValueRule extends ValueRule implements IRuleCompute, Seri
     private String expression;
 
     @Override
-    public Object compute(InState inState) {
+    public Object getRuleValue(InState inState) {
+        this.expressionObject = BuildExpression.parseExpression(inState, expression);
+        this.expressionObject.expressionEvaluation(inState);
+        return expressionObject.getExpressionResult();
+    }
 
-        TableInfo tableInfo = inState.getTableInfo();
-        TableColumn tableColumn = inState.getTableColumn();
-
-        try {
-            if (this.buildExpressionObject.getExpressionBoolResult()) {
-                this.expressionObject = BuildExpression.parseExpression(inState, expression);
-                this.expressionObject.expressionEvaluation(inState);
-                return expressionObject.getExpressionResult();
-            }
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                e.printStackTrace();
-            }
-            throw new ValueComputeException(String.format(
-                    "字段生成异常,类型:{%s} tableNo:{%s},tableName:{%s},columnName:{%s} expression:'%s'",
-                    this.type, tableInfo.getNo(), tableInfo.getTableName(), tableColumn.getColumnName(),
-                    this.expression));
-        }
-        return super.compute(inState);
+    @Override
+    protected Map<String, Object> errorMessageMap() {
+        return ImmutableMap.of("expression", expression);
     }
 }

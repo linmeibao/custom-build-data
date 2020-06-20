@@ -1,17 +1,16 @@
 package nny.build.data.builder.model.rule;
 
-import nny.build.data.builder.exception.ValueComputeException;
-import nny.build.data.builder.model.InState;
-import nny.build.data.builder.model.build.BuildExpression;
-import nny.build.data.builder.model.build.ReferenceDefinition;
-import nny.build.data.builder.model.table.TableColumn;
-import nny.build.data.builder.model.table.TableInfo;
-import nny.build.data.builder.service.IRuleCompute;
+import com.google.common.collect.ImmutableMap;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import nny.build.data.builder.model.InState;
+import nny.build.data.builder.model.build.BuildExpression;
+import nny.build.data.builder.model.build.ReferenceDefinition;
+import nny.build.data.builder.model.rule.ValueRule;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 地区
@@ -22,7 +21,7 @@ import java.io.Serializable;
 @Slf4j
 @Getter
 @Setter
-public class DistrictValueRule extends ValueRule implements IRuleCompute, Serializable {
+public class DistrictValueRule extends ValueRule implements Serializable {
     private static final long serialVersionUID = 8364294457745199482L;
 
     /**
@@ -36,27 +35,14 @@ public class DistrictValueRule extends ValueRule implements IRuleCompute, Serial
     private String refColumnExpression;
 
     @Override
-    public Object compute(InState inState) {
+    public Object getRuleValue(InState inState) {
+        this.refDefinition = BuildExpression.parseRefColumnExpression(inState, this.refColumnExpression);
+        return getDistrict(inState);
+    }
 
-        TableInfo tableInfo = inState.getTableInfo();
-        TableColumn tableColumn = inState.getTableColumn();
-
-        try {
-            if (this.buildExpressionObject.getExpressionBoolResult()) {
-                this.refDefinition = BuildExpression.parseRefColumnExpression(inState, this.refColumnExpression);
-                return getDistrict(inState);
-            }
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                e.printStackTrace();
-            }
-            throw new ValueComputeException(String.format(
-                    "字段生成异常,类型:{%s} tableNo:{%s},tableName:{%s},columnName:{%s} expression:'%s'",
-                    this.type, tableInfo.getNo(), tableInfo.getTableName(), tableColumn.getColumnName(),
-                    this.refColumnExpression));
-        }
-        return super.compute(inState);
-
+    @Override
+    protected Map<String, Object> errorMessageMap() {
+        return ImmutableMap.of("refColumnExpression",refColumnExpression);
     }
 
     private String getDistrict(InState inState) {

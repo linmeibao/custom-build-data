@@ -1,9 +1,9 @@
 package nny.build.data.builder.model.rule;
 
-import nny.build.data.builder.model.InState;
-import nny.build.data.builder.service.IRuleCompute;
 import lombok.Getter;
 import lombok.Setter;
+import nny.build.data.builder.model.InState;
+import nny.build.data.builder.model.rule.ValueRule;
 import org.apache.commons.lang3.RandomUtils;
 
 import java.io.Serializable;
@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class RandomSelectorValueRule extends ValueRule implements IRuleCompute, Serializable {
+public class RandomSelectorValueRule extends ValueRule implements Serializable {
 
     private static final long serialVersionUID = -6013730955223186854L;
 
@@ -26,10 +26,7 @@ public class RandomSelectorValueRule extends ValueRule implements IRuleCompute, 
     private Object[] valueArray;
 
     @Override
-    public Object compute(InState inState) {
-        if (this.buildExpressionObject.getExpressionBoolResult() && valueArray != null) {
-            return valueArray[RandomUtils.nextInt(0, valueArray.length)];
-        }
-        return super.compute(inState);
+    public Object getRuleValue(InState inState) {
+        return valueArray[RandomUtils.nextInt(0, valueArray.length)];
     }
 }
