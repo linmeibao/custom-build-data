@@ -117,7 +117,7 @@ public class BuilderService {
      */
     public Map<String, List<BuildSqlData>> buildSqlDataMap(List<BuildData> buildDataList) {
 
-        Map<String, List<BuildSqlData>> sqlDataMap = new HashMap<>();
+        Map<String, List<BuildSqlData>> sqlDataMap = new LinkedHashMap<>();
 
         for (BuildData buildData : buildDataList) {
             Map<String, List<BuildSqlData>> builderDataSqlMap = buildData.getSqlDataMap();

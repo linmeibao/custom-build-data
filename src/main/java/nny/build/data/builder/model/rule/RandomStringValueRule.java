@@ -26,6 +26,7 @@ public class RandomStringValueRule extends ValueRule implements Serializable {
 
     @Override
     public Object getRuleValue(InState inState) {
+        // TODO 可新增指定字符串长度参数
         return this.prefix + RandomDataUtils.randomString();
     }
 }

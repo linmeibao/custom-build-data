@@ -111,7 +111,11 @@ public class BuildExpression implements Serializable {
         Map<String, Object> paramMap = new HashMap<>(10);
         buildExpressionParams.forEach(p -> p.fillParamValue(inState));
         buildExpressionParams.forEach(p -> paramMap.put(p.getRefDefinition().getRefColumnName(), p.getParamValue()));
-        this.expressionResult = AviatorUtils.expressionExecute(this.expression, paramMap);
+        try {
+            this.expressionResult = AviatorUtils.expressionExecute(this.expression, paramMap);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 

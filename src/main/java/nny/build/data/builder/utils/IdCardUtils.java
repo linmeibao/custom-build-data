@@ -49,7 +49,8 @@ public class IdCardUtils {
         Random random = new Random();
         int value = random.nextInt(Cities.CITIES.length);
         sb.append(Cities.CITIES[value]).append(birth);
-        value = random.nextInt(999) + 1;
+        // TODO BUG 999 + 1有问题
+        value = random.nextInt(998) + 1;
         if (male && value % 2 == 0) value++;
         if (!male && value % 2 == 1) {
             value++;
@@ -99,7 +100,11 @@ public class IdCardUtils {
 //        System.out.println(getIdNo(false));
 //        a = System.currentTimeMillis() - a;
 //        System.out.println(a);
-        String idcard="123456";
-        System.out.println(idcard.substring(0,6));
+//        for (int i = 0; i < 100000; i++) {
+//            String id = getIdNo();
+//            if (id.length() > 18){
+//                System.out.println(id);
+//            }
+//        }
    }
 }

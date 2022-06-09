@@ -75,9 +75,9 @@ public abstract class AbstractValueRule implements Serializable {
             try {
                 return this.getRuleValue(inState);
             } catch (Exception e) {
-                if (log.isDebugEnabled()) {
+//                if (log.isDebugEnabled()) {
                     e.printStackTrace();
-                }
+//                }
 
                 Map<String, Object> errorMap = this.errorMessageMap();
 

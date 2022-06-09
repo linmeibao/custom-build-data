@@ -60,8 +60,19 @@ public class RandomDateConditionValueRule extends ValueRule implements Serializa
             ReferenceDefinition refDefinition = param.getRefDefinition();
             if (!inState.getTableColumn().getColumnName().equals(refDefinition.getRefColumnName())) {
                 compareColumnName = refDefinition.getRefColumnName();
+                param.fillParamValue(inState);
+                break;
             }
-            param.fillParamValue(inState);
+
+            // TODO 待完善 有BUG
+//            if (inState.getTableColumn().getColumnName().equals(refDefinition.getRefColumnName()) &&
+//                    (!inState.getTableInfo().getTableName().equals(refDefinition.getRefTableName()))
+//            ) {
+//                compareColumnName = refDefinition.getRefColumnName();
+//                param.fillParamValue(inState);
+//                break;
+//            }
+
         }
 
         if (StringUtils.isEmpty(compareColumnName)) {
@@ -74,6 +85,7 @@ public class RandomDateConditionValueRule extends ValueRule implements Serializa
             ReferenceDefinition refDefinition = param.getRefDefinition();
             if (refDefinition.getRefColumnName().equals(compareColumnName)) {
                 compareColumnValue = param.getParamValue();
+                break;
             }
         }
 
@@ -85,6 +97,7 @@ public class RandomDateConditionValueRule extends ValueRule implements Serializa
         boolean loop = true;
         String value = null;
 
+        // TODO "${1.cm_user_info.create_time} < ${4.cas_info.create_time}".equals(this.compareExpression) 字段重名会出现问题
         while (loop) {
             value = RandomDataUtils.randomDateString();
             compareExpressionObject.boolExpressionEvaluation(inState.getTableColumn().getColumnName(), value);

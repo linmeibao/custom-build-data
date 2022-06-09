@@ -6,10 +6,7 @@ import nny.build.data.builder.model.table.TableInfo;
 import nny.build.data.builder.model.table.TableRelation;
 import org.apache.commons.collections.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 数据构建对象
@@ -29,7 +26,7 @@ public class BuildData {
      * dbKey : {"Insert INTO tableName (a,b,c) VALUES(?,?,?)":[[1,2,3],[4,5,6]]}
      * dbKey : {"update tableName set a = ? b= ? c=? where d = ?)":List<List<TableColumn>>}
      */
-    Map<String, List<BuildSqlData>> sqlDataMap = new HashMap<>();
+    Map<String, List<BuildSqlData>> sqlDataMap = new LinkedHashMap<>();
 
     public List<TableInfo> getTableInfos() {
         return tableInfos;

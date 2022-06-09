@@ -8,19 +8,22 @@ package nny.build.data.builder.enums;
  * @date 2020-02-24
  */
 public enum SqlTypeEnum {
-
+    // TODO 完善类型，比如bigint double
     STRING("STRING", "VARCHAR"),
     INTEGER("INTEGER", "INT"),
+    SMALLINT("INTEGER", "SMALLINT"),
     Boolean("Boolean", "BOOLEAN"),
-    LONG("LONG", "INTEGER"),
+    LONG("LONG", "BIGINT"),
     DATE("DATE", "DATETIME"),
-    DOUBLE("DOUBLE", "DECIMAL"),
-    Currency("Currency", "VARCHAR"),
-    DICTIONARY("DICTIONARY", "VARCHAR"),
-    TIMESTAMP("TIMESTAMP", "TIMESTAMP"),
-    Maps("Maps", "VARCHAR"),
-    Lists("Lists", "VARCHAR"),
-    ListItem("ListItem", "VARCHAR");
+    DOUBLE("DOUBLE", "DOUBLE"),
+    DECIMAL("DOUBLE", "DECIMAL"),
+
+//    Currency("Currency", "VARCHAR"),
+//    DICTIONARY("DICTIONARY", "VARCHAR"),
+    TIMESTAMP("TIMESTAMP", "TIMESTAMP");
+//    Maps("Maps", "VARCHAR"),
+//    Lists("Lists", "VARCHAR"),
+//    ListItem("ListItem", "VARCHAR");
 
     private String name;
     private String type;

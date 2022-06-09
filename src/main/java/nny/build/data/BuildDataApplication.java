@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2019/8/26
  */
 @Slf4j
-public class CustomBuildDataApplication {
+public class BuildDataApplication {
 
     public static void main(String[] args) {
         log.info("自定义生成测试数据服务启动, args:{}", args);

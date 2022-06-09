@@ -14,6 +14,7 @@ import nny.build.data.builder.model.table.TableColumn;
 import nny.build.data.builder.model.table.TableIndex;
 import nny.build.data.builder.model.table.TableInfo;
 import nny.build.data.builder.utils.CommonUtils;
+import nny.build.data.builder.utils.RandomDataUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 
@@ -127,7 +128,7 @@ public class SerializeExampleConfig {
     private List<TableInfo> convertTableInfos(String dbKey, Connection connection, List<String> tableList) {
 
         List<TableInfo> tableInfos = new ArrayList<>();
-        StringBuilder sb = new StringBuilder("select table_name,column_name,column_comment,column_type,is_nullable,data_type  from information_schema.columns c where table_schema = ? AND table_name IN(");
+        StringBuilder sb = new StringBuilder("select table_name,column_name,column_comment,column_type,is_nullable,data_type,CHARACTER_MAXIMUM_LENGTH  from information_schema.columns c where table_schema = ? AND table_name IN(");
         for (int i = 0; i < tableList.size(); i++) {
             sb.append("?");
 
@@ -163,6 +164,7 @@ public class SerializeExampleConfig {
                 String columnType = resultSet.getString(4);
                 String isNullAble = resultSet.getString(5);
                 String dataType = resultSet.getString(6);
+                String charMaxLength = resultSet.getString(7);
 
                 Map<String, String> map = new HashMap<>();
                 map.put("tableName", tableName);
@@ -171,6 +173,7 @@ public class SerializeExampleConfig {
                 map.put("columnType", columnType);
                 map.put("isNullAble", isNullAble);
                 map.put("dataType", dataType);
+                map.put("charMaxLength", charMaxLength);
                 resultList.add(map);
             }
 
@@ -182,8 +185,9 @@ public class SerializeExampleConfig {
                 String columnName = map.get("columnName");
                 String comment = map.get("comment");
                 String columnType = map.get("columnType");
-                String isNullAble = map.get("isNullAble");
+                boolean isNullAble = "YES".equals(map.get("isNullAble")) ? true : false;
                 String dataType = map.get("dataType");
+                String charMaxLength = map.get("charMaxLength");
 
                 for (TableInfo tableInfo : tableInfos) {
                     if (tableInfo.getTableName().equals(tableName)) {
@@ -192,14 +196,35 @@ public class SerializeExampleConfig {
                         tableColumn.setComment(comment);
                         tableColumn.setColumnType(columnType);
 
-                        tableColumn.setIsNullStr("YES".equals(isNullAble) ? "NULL" : "NOT NULL");
-                        tableColumn.setDataType(SqlTypeEnum.convertSqlType(dataType));
+                        tableColumn.setIsNullStr(isNullAble ? "NULL" : "NOT NULL");
+                        tableColumn.setDataType(SqlTypeEnum.convertSqlType(dataType)); // TODO 类型转换优化
                         ValueRule valueRule = new ValueRule();
-                        valueRule.setType("NORMAL");
-                        if (SqlTypeEnum.STRING.equals(tableColumn.getDataType())) {
-                            valueRule.setDefaultValue("test");
-                        } else {
+                        if (SqlTypeEnum.DATE.equals(tableColumn.getDataType()) ||
+                                SqlTypeEnum.TIMESTAMP.equals(tableColumn.getDataType())
+                        ) {
+                            valueRule.setType("RANDOM_DATE");
                             valueRule.setDefaultValue(0);
+                        } else if (SqlTypeEnum.DOUBLE.equals(tableColumn.getDataType()) ||
+                                SqlTypeEnum.INTEGER.equals(tableColumn.getDataType())) {
+                            valueRule.setType("RANDOM_MONEY");
+                        } else if (SqlTypeEnum.LONG.equals(tableColumn.getDataType())) {
+                            valueRule.setType("GLOBAL_AUTO_INCREMENT");
+                        } else if (SqlTypeEnum.Boolean.equals(tableColumn.getDataType())) {
+                            valueRule.setType("NORMAL");
+                            valueRule.setDefaultValue("true");
+                        } else if (SqlTypeEnum.DECIMAL.equals(tableColumn.getDataType())) {
+                            valueRule.setType("RANDOM_MONEY");
+                        } else {
+                            valueRule.setType("NORMAL");
+                            if (!isNullAble && charMaxLength != null) {
+                                int length = Integer.parseInt(charMaxLength);
+                                if (length <= 6) {
+                                    valueRule.setDefaultValue("1");
+                                } else {
+                                    valueRule.setDefaultValue("test");
+                                }
+                            }
+
                         }
                         tableColumn.setValueRule(valueRule);
                         tableInfo.getColumns().add(tableColumn);
@@ -250,7 +275,8 @@ public class SerializeExampleConfig {
                             }
                         } else {
                             TableIndex tableIndex = new TableIndex();
-                            tableIndex.setIndexName(keyName);
+                            // TODO 联合索引创建还存在问题，需要优化
+                            tableIndex.setIndexName(keyName + RandomDataUtils.randomString());
                             tableIndex.setColumnName(columnName);
                             tableInfo.getIndexInfos().add(tableIndex);
                         }

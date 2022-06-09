@@ -17,23 +17,7 @@ dataSourceConfig:
       username: root
       password: root
   # 是否开启自动删表建表DDL
-  autoDDl: false
-
-# 设置构建多少组数据
-buildNumber: 100
-
-# DML配置文件路径
-dataJsonFilePath: src/main/resources/dataconf/cl/cdyh101.json
-#
-## DDL配置文件路径
-dataDDLJsonFilePath: src/main/resources/dataconf/example/insurance_ddl.json
-
-# 自动生成的sql语句输出路径
-sqlFileOutputFilePath: src/main/resources/dataconf/
-
-# 全局自增Id保存文件地址
-globalAutoIncrementFilePath: src/main/resources/dataconf/increment.id
-
+  autoDDl: true
 
 # 序列化生成示例文件配置,从mysql数据库读取库表结构和数据序列化生成示例JSON
 exampleConfig:
@@ -45,8 +29,23 @@ exampleConfig:
   generateDMl: true
   # 数据源列表
   dataSourceInfos:
-    - dbKey: task
+    - dbKey: api
       driverClassName: com.mysql.jdbc.Driver
       jdbcUrl: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true&serverTimezone=UTC
       username: root
       password: root
+
+# 设置构建多少组数据
+buildNumber: 1
+
+# DML配置文件路径
+dataJsonFilePath: src/main/resources/dataconf/example/insurance.json
+#
+## DDL配置文件路径
+dataDDLJsonFilePath: src/main/resources/dataconf/example/insurance_ddl.json
+
+# 自动生成的sql语句输出路径
+sqlFileOutputFilePath: src/main/resources/dataconf/
+
+# 全局自增Id保存文件地址
+globalAutoIncrementFilePath: src/main/resources/dataconf/increment.id

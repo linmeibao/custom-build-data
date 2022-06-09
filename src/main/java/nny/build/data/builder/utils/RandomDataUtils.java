@@ -23,7 +23,9 @@ public class RandomDataUtils {
      */
     public static String randomString() {
         StringBuilder code = new StringBuilder();
-        for (int i = 0; i < 19; i++) {
+//        for (int i = 0; i < 19; i++) {
+        // TODO 临时修改为10位
+        for (int i = 0; i < 10; i++) {
             boolean boo = (int) (Math.random() * 2) == 0;
             if (boo) {
                 code.append(String.valueOf((int) (Math.random() * 10)));
@@ -38,21 +40,21 @@ public class RandomDataUtils {
 
     /**
      * 随机时间 yyyy-MM-dd HH:mm:ss
-     *
+     * TODO 指定日期格式
      * @return
      */
     public static String randomDateString() {
         Calendar calendar = Calendar.getInstance();
         //注意月份要减去1
-        calendar.set(2016, 11, 31);
+        calendar.set(2020, 11, 31);
         calendar.getTime().getTime();
         //根据需求，这里要将时分秒设置为0
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long min = calendar.getTime().getTime();
-        ;
-        calendar.set(2019, 11, 31);
+
+        calendar.set(2021, 11, 31);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
