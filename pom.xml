@@ -17,7 +17,7 @@
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <commons-io.version>2.6</commons-io.version>
-        <jackson.version>2.11.0</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <jyaml.version>1.3</jyaml.version>
         <aviator.version>4.2.10</aviator.version>
         <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
